@@ -6,14 +6,20 @@ import About from "./pages/About"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import Dashbord from "./pages/Dashbord"
+import Layout from "./pages/Layout"
 
 const App = () => {
   const routes = createBrowserRouter([
-    { path: "", element: <Home /> },
-    { path: "/about", element: <About /> },
-    { path: "/sign-in", element: <SignIn /> },
-    { path: "/sign-up", element: <SignUp /> },
-    { path: "/dashboard", element: <Dashbord /> },
+    {
+      path: "/", element: <Layout />, children: [
+        { path: "home", element: <Home /> },
+        { path: "about", element: <About /> },
+        { path: "sign-in", element: <SignIn /> },
+        { path: "sign-up", element: <SignUp /> },
+        { path: "dashboard", element: <Dashbord /> },
+        { path: "projects", element: <Dashbord /> },
+      ]
+    },
     // Add more routes here
 
     // Add more routes here
