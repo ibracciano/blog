@@ -72,7 +72,7 @@ const Header = () => {
             {/* <p>papa</p> */}
           </div>
 
-          <button className="bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-2 rounded-md">
+          <button className="bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-2 rounded-md hover:outline transition-all duration-100">
             Sign In
           </button>
 
