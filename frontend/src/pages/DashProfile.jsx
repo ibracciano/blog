@@ -46,12 +46,14 @@ const DashProfile = () => {
           Update Profile
         </button>
 
-        <button
-          type="button"
-          className="w-[90%] md:w-[50%] px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
-        >
-          Delete Account
-        </button>
+        <div className="flex items-center justify-between gap-20 md:gap-80 ">
+          <span className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
+            Delete Account
+          </span>
+          <span className="px-4 py-2 text-white bg-red-800 rounded-md hover:bg-red-600">
+            Sign Out
+          </span>
+        </div>
       </form>
     </main>
   );
