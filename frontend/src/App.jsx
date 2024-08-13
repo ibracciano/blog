@@ -7,6 +7,9 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import Dashbord from "./pages/Dashbord"
 import Layout from "./pages/Layout"
+import Projects from "./pages/Projects"
+// import { privateRoute } from "./utils/hook"
+
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -16,8 +19,8 @@ const App = () => {
         { path: "about", element: <About /> },
         { path: "sign-in", element: <SignIn /> },
         { path: "sign-up", element: <SignUp /> },
-        { path: "dashboard", element: <Dashbord /> },
-        { path: "projects", element: <Dashbord /> },
+        { path: "dashboard", element: <Dashbord />, },
+        { path: "projects", element: <Projects /> },
       ]
     },
     // Add more routes here

@@ -1,22 +1,32 @@
 // import React from 'react'
 import { CiSearch } from "react-icons/ci";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Header = () => {
+  const location = useLocation();
+  // console.log(location);
   const { currentUser } = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
   // console.log(currentUser);
 
   // navigation for mobile
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openSearchTerm, setOpenSearchTerm] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    if (location.pathname) {
+      setOpenModal(false);
+      setIsMenuOpen(false);
+    }
+  }, [location.pathname]);
 
   // navigation for desktop
   const links = [
@@ -39,15 +49,26 @@ const Header = () => {
           </h1>
 
           {/* searchBar */}
-          <form className="flex items-center justify-between gap-2 bg-slate-800 p-2 rounded-md w-[40px] md:w-[300px]">
+          <form
+            className={`flex items-center justify-between bg-slate-800 p-2 rounded-md ${
+              openSearchTerm
+                ? "w-[150px] transition-all duration-700"
+                : "w-[40px] transition-all duration-700"
+            }  md:w-[300px]`}
+          >
             <input
               type="text"
               placeholder="search..."
-              className="hidden outline-none bg-slate-800 md:flex"
+              className={`outline-none bg-slate-800 md:flex ${
+                openSearchTerm ? "w-[70px]" : "w-0"
+              } `}
             />
-            <button className="p-1 rounded-full bg-gradient-to-r from-slate-500 to-gray-700">
+            <span
+              className="p-1 rounded-full bg-gradient-to-r from-slate-500 to-gray-700"
+              onClick={() => setOpenSearchTerm(!openSearchTerm)}
+            >
               <CiSearch />
-            </button>
+            </span>
           </form>
 
           {/* menu */}
@@ -73,7 +94,7 @@ const Header = () => {
             <div className="flex items-center gap-2">
               {/* image profile */}
               <div
-                className="w-10 h-10 cursor-pointer"
+                className="w-10 h-10 border-4 border-blue-500 rounded-full cursor-pointer"
                 onClick={() => setOpenModal(!openModal)}
               >
                 <img
@@ -83,11 +104,14 @@ const Header = () => {
                 />
               </div>
               {/* name profile */}
-              <p>{currentUser.username.slice(0, 4)}</p>
+              {/* <p>{currentUser.username.slice(0, 4)}</p> */}
               {openModal && (
-                <div className="absolute flex flex-col bg-slate-800 top-[72px] rounded-md">
+                <div className="absolute flex flex-col bg-slate-800 top-[72px] right-10 rounded-md">
                   <p className="px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">{`@ ${currentUser.username}`}</p>
-                  <Link className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900">
+                  <Link
+                    to="/dashboard?tab=profile"
+                    className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900"
+                  >
                     My Profile
                   </Link>
                   <span className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900">
