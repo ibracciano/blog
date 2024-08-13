@@ -59,3 +59,45 @@ export const signin = async (req, res) => {
 
 }
 
+export const google = async (req, res) => {
+    const { username, email, photoURL } = req.body
+    try {
+        const userExist = await User.findOne({ email })
+        if (userExist) {
+            // generer un token d'authentification
+            const token = jwt.sign({ id: validateUser._id }, process.env.JWT_SECRET)
+
+            // ne pas ramener le mot de passe de l'utilisateur
+            const { password: pass, ...userWithoutPassword } = validateUser._doc
+
+
+            // creer un cookie
+            res.cookie('token', token, { httpOnly: true }).json(userWithoutPassword)
+        } else {
+            // générer un mot de passe aléatoire et sauvegarder l'utilisateur
+            const generatePassword = Math.random().toString(36).slice(0, 8)
+
+            // crypter le mot de passe 
+            const salt = await bcryptjs.genSalt(10)
+            const hashedPassword = await bcryptjs.hash(generatePassword, salt)
+
+            const newUser = new User({ username: username.toLowerCase().split(" ")[0], email, password: hashedPassword, photo: photoURL })
+            await newUser.save()
+
+            // generer un token d'authentification
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
+
+            // ne pas ramener le mot de passe de l'utilisateur
+            const { password: pass, ...userWithoutPassword } = newUser._doc
+
+
+            // creer un cookie
+            res.cookie('token', token, { httpOnly: true }).json(userWithoutPassword)
+
+
+        }
+    } catch (error) {
+
+    }
+}
+

@@ -1,11 +1,16 @@
 // import React from 'react'
 import { CiSearch } from "react-icons/ci";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [openModal, setOpenModal] = useState(false);
+  // console.log(currentUser);
+
   // navigation for mobile
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -21,13 +26,13 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50">
-      <div className="bg-slate-950 text-white relative">
+    <header className="fixed top-0 z-50 w-full">
+      <div className="relative text-white bg-slate-950">
         {/* navgation for desktop */}
         <nav className="w-[90%] md:w-[80%] mx-auto flex items-center justify-between py-4">
           {/* Logo */}
           <h1>
-            <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-xl font-bold p-1 rounded-md">
+            <span className="p-1 text-xl font-bold rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
               My
             </span>
             <span className="font-bold">BLOG</span>
@@ -38,15 +43,15 @@ const Header = () => {
             <input
               type="text"
               placeholder="search..."
-              className="bg-slate-800 outline-none hidden md:flex"
+              className="hidden outline-none bg-slate-800 md:flex"
             />
-            <button className="bg-gradient-to-r from-slate-500 to-gray-700 p-1 rounded-full">
+            <button className="p-1 rounded-full bg-gradient-to-r from-slate-500 to-gray-700">
               <CiSearch />
             </button>
           </form>
 
           {/* menu */}
-          <ul className="md:flex items-center gap-5 hidden">
+          <ul className="items-center hidden gap-5 md:flex">
             {links.map((link, index) => (
               <NavLink
                 to={link.path}
@@ -63,18 +68,42 @@ const Header = () => {
           </ul>
 
           {/* connexion */}
-          <div>
-            {/* image profile */}
-            {/* <div>
-              <img src="" alt="profile" />
-            </div> */}
-            {/* name profile */}
-            {/* <p>papa</p> */}
-          </div>
 
-          <button className="bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-2 rounded-md hover:outline transition-all duration-100">
-            Sign In
-          </button>
+          {currentUser ? (
+            <div className="flex items-center gap-2">
+              {/* image profile */}
+              <div
+                className="w-10 h-10 cursor-pointer"
+                onClick={() => setOpenModal(!openModal)}
+              >
+                <img
+                  src={currentUser.photo}
+                  alt="profile"
+                  className="w-full rounded-full"
+                />
+              </div>
+              {/* name profile */}
+              <p>{currentUser.username.slice(0, 4)}</p>
+              {openModal && (
+                <div className="absolute flex flex-col bg-slate-800 top-[72px] rounded-md">
+                  <p className="px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">{`@ ${currentUser.username}`}</p>
+                  <Link className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900">
+                    My Profile
+                  </Link>
+                  <span className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900">
+                    SignOut
+                  </span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/sign-in"
+              className="px-2 py-1 transition-all duration-100 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 hover:outline"
+            >
+              Sign In
+            </Link>
+          )}
 
           {/* burger menu */}
           <button className="md:hidden" onClick={toggleMenu}>
