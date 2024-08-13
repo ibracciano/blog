@@ -6,9 +6,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/userSlice";
 
 const SignIn = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [hidden, setHidden] = useState(true);
     const [infos, setInfos] = useState({
         email: "",
@@ -25,13 +28,17 @@ const SignIn = () => {
             toast.warning(" all fields are required");
         }
         try {
-            await axios.post("http://localhost:3000/api/auth/signin", infos);
-            toast.success("signin successful");
-            // Reset form fields
-            setInfos({ email: "", password: "" });
-            setTimeout(() => {
-                navigate("/sign-up");
-            }, 1000);
+            const res = await axios.post("http://localhost:3000/api/auth/signin", infos);
+            if (res.status === 200) {
+                toast.success("signin successful");
+                dispatch(loginUser(res.data))
+                // Reset form fields
+                setInfos({ email: "", password: "" });
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+            }
+            // console.log(res)
         } catch (error) {
             console.error("Error:", error.message);
         }
