@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 // import routes
 import userRoutes from './routes/user.route.js';
+import authRoutes from './routes/auth.route.js';
 
 dotenv.config();
 
@@ -32,3 +33,4 @@ app.listen(port, () => {
 });
 
 app.use('/api/user', userRoutes)
+app.use('/api/auth', authRoutes)

@@ -1,3 +1,3 @@
 export const test = (req, res) => {
-    res.json({ message: 'test message' })
+    return res.status(200).json({ message: 'test message' })
 }
