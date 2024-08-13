@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 // import routes
 import userRoutes from './routes/user.route.js';
@@ -18,6 +19,7 @@ const port = process.env.PORT || 3000;
 // middleware pour accepter les données JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // connection à la base de données
 mongoose.connect(process.env.MONGO_URL).then(() => {
