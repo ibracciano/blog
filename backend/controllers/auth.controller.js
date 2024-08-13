@@ -4,7 +4,7 @@ import bcryptjs from 'bcryptjs'
 export const signup = async (req, res) => {
     const { username, email, password } = req.body
     if (!username || !email || !password || username.length === 0 || email.length === 0 || password.length === 0) {
-        return res.status(400).json({ error: 'All fields are required' })
+        return res.status(400).json({ message: 'All fields are required' })
     }
 
     // crypter le mot de passe 
