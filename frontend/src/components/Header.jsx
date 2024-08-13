@@ -109,7 +109,7 @@ const Header = () => {
                 <div className="absolute flex flex-col bg-slate-800 top-[72px] right-10 rounded-md">
                   <p className="px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">{`@ ${currentUser.username}`}</p>
                   <Link
-                    to="/dashboard?tab=profile"
+                    to={`/dashboard/profile/${currentUser.username}`}
                     className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900"
                   >
                     My Profile

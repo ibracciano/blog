@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp"
 import Dashbord from "./pages/Dashbord"
 import Layout from "./pages/Layout"
 import Projects from "./pages/Projects"
+import DashProfile from "./pages/DashProfile"
 // import { privateRoute } from "./utils/hook"
 
 
@@ -19,13 +20,15 @@ const App = () => {
         { path: "about", element: <About /> },
         { path: "sign-in", element: <SignIn /> },
         { path: "sign-up", element: <SignUp /> },
-        { path: "dashboard", element: <Dashbord />, },
         { path: "projects", element: <Projects /> },
+        {
+          path: "dashboard", element: <Dashbord />, children: [
+            { path: "profile/:username", element: <DashProfile /> }
+          ]
+        },
+
       ]
     },
-    // Add more routes here
-
-    // Add more routes here
   ])
   return (
     <RouterProvider router={routes} />
