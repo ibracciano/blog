@@ -26,3 +26,19 @@ export const verifyUserAuthentication = async () => {
     }
     return null
 }
+
+export const verifyAdminAuthentication = async () => {
+    try {
+        const response = await axios.get(api.AuthVerify)
+        const user = response.data.user
+        if (user.role === 'user') {
+            window.location.href = "/"
+        }
+    } catch (error) {
+        if (error) {
+            window.location.reload()
+            window.location.href = "/"
+        }
+    }
+    return null
+}

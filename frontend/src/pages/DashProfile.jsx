@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { api } from "../utils/api";
 import { loginUser, logoutUser } from "../redux/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const DashProfile = () => {
@@ -172,10 +172,21 @@ const DashProfile = () => {
         />
         <button
           type="submit"
-          className="w-[90%] md:w-[50%] px-4 py-2 text-white bg-cyan-500 rounded-md hover:bg-cyan-600 mb-3"
+          className="w-[90%] md:w-[50%] px-4 py-2 text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md hover:bg-cyan-600 mb-3"
         >
           Update Profile
         </button>
+
+        {currentUser.role === "admin" && (
+          <button
+            type="submit"
+            className="w-[90%] md:w-[50%] px-4 py-2 text-white bg-gradient-to-r from-red-500 to-orange-500 rounded-md hover:bg-orange-600 mb-3"
+          >
+            <Link to="/dashboard/create-post" className="block w-full">
+              Create a post
+            </Link>
+          </button>
+        )}
 
         <div className="flex items-center justify-between gap-20 md:gap-[250px]">
           <span

@@ -10,10 +10,15 @@ import Layout from "./pages/Layout";
 import Projects from "./pages/Projects";
 import DashProfile from "./pages/DashProfile";
 import EmailVerify from "./pages/EmailVerify";
-import { getUserAuthentificated, verifyUserAuthentication } from "./utils/hook";
+import {
+  getUserAuthentificated,
+  verifyAdminAuthentication,
+  verifyUserAuthentication,
+} from "./utils/hook";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/userSlice";
+import CreatePost from "./pages/admin/CreatePost";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -52,6 +57,11 @@ const App = () => {
               path: "profile/:username",
               element: <DashProfile />,
               loader: verifyUserAuthentication,
+            },
+            {
+              path: "create-post",
+              element: <CreatePost />,
+              loader: verifyAdminAuthentication,
             },
           ],
         },
