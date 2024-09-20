@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 export const addPost = async (req, res) => {
     // récupérer les données du post
-    const { title, content } = req.body
+    const { title, content, image, category } = req.body
 
     try {
         // verifier si l'utilisateur connecté est admin
@@ -23,13 +23,13 @@ export const addPost = async (req, res) => {
         }
 
         // créer un nouveau post
-        const newPost = new Post({ title, content, slug: title.split(" ").join("-") })
+        const newPost = new Post({ title, content, category, image, author: user._id, slug: title.split(" ").join("-") })
 
         // sauvegarder le nouveau post
         await newPost.save()
 
         // renvoyer le nouveau post
-        res.status(200).json({ success: true, message: 'Post ajouté avec succès', post: newPost })
+        res.status(200).json({ success: true, message: 'Post ajouté avec succès', data: newPost })
 
     }
     catch (error) {

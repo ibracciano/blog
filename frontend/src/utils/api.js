@@ -8,5 +8,5 @@ export const api = {
     AuthVerify: `${backendURL}/api/user/check-auth`,
     updateProfileUser: `${backendURL}/api/user/update-profile`,
     removeProfileUser: `${backendURL}/api/user/remove-profile`,
-
+    addPost: `${backendURL}/api/post/add-post`
 }
