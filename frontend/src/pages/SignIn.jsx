@@ -6,13 +6,14 @@ import { HiMiniEyeSlash } from "react-icons/hi2";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../redux/userSlice";
+// import { useDispatch } from "react-redux";
+// import { loginUser } from "../redux/userSlice";
 import Google from "../components/Google";
+import { api } from "../utils/api";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [hidden, setHidden] = useState(true);
   const [infos, setInfos] = useState({
     email: "",
@@ -25,26 +26,26 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (infos.email === "" || infos.password === "") {
-      toast.warning(" all fields are required");
-    }
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/signin",
-        infos
-      );
-      if (res.status === 200) {
-        toast.success("signin successful");
-        dispatch(loginUser(res.data));
+      if (infos.email === "" || infos.password === "") {
+        toast.warning(" all fields are required");
+      }
+      const res = await axios.post(api.signIn, infos);
+      // console.log(res);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        // dispatch(loginUser(res.data));
         // Reset form fields
         setInfos({ email: "", password: "" });
+        window.location.reload();
         setTimeout(() => {
           navigate("/");
         }, 1000);
       }
-      // console.log(res)
+      // console.log(res);
     } catch (error) {
-      console.error("Error:", error.message);
+      toast.error(error.response.data.message);
+      // console.log("Error:", error);
     }
   };
 
@@ -73,6 +74,7 @@ const SignIn = () => {
                 id="email"
                 placeholder="test@example.com"
                 value={infos.email}
+                autoComplete="email"
                 className="w-full p-2 text-black rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleChange(e)}
               />
@@ -91,6 +93,7 @@ const SignIn = () => {
                   id="password"
                   placeholder="password"
                   value={infos.password}
+                  autoComplete="current-password"
                   className="w-[90%] p-2 outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-black"
                   onChange={(e) => handleChange(e)}
                 />

@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { api } from "../utils/api";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -22,19 +23,28 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (infos.email === "" || infos.password === "" || infos.username === "") {
-      toast.warning(" all fields are required");
-    }
     try {
-      await axios.post("http://localhost:3000/api/auth/signup", infos);
-      toast.success("you are successfully registered");
-      // Reset form fields
-      setInfos({ username: "", email: "", password: "" });
-      setTimeout(() => {
+      if (
+        infos.email === "" ||
+        infos.password === "" ||
+        infos.username === ""
+      ) {
+        toast.warning("Tous les champs sont requis");
+      }
+      const response = await axios.post(api.signUp, infos);
+
+      // console.log(response);
+      if (response.data.success) {
+        toast.success("Votre inscription a réussi");
         navigate("/sign-in");
-      }, 1000);
+        setInfos({ username: "", email: "", password: "" });
+        setTimeout(() => {
+          navigate("/verify-email");
+        }, 1000);
+      }
     } catch (error) {
-      console.error("Error:", error.message);
+      toast.error(error.response.data.message);
+      console.log("Error:", error.response.data.message);
     }
   };
 
@@ -46,9 +56,9 @@ const SignUp = () => {
     <main className="pt-32">
       <div className="w-[90%] md:w-[30%] mx-auto">
         <div className="p-5 shadow shadow-slate-800">
-          <h1 className="text-3xl font-bold text-center mb-2">Sign Up</h1>
+          <h1 className="mb-2 text-3xl font-bold text-center">Sign Up</h1>
           <form
-            className="w-full flex flex-col gap-3"
+            className="flex flex-col w-full gap-3"
             onSubmit={(e) => handleSubmit(e)}
           >
             {/* username */}
@@ -63,7 +73,8 @@ const SignUp = () => {
                 id="username"
                 placeholder="username"
                 value={infos.username}
-                className="w-full p-2 outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-black"
+                autoComplete="username"
+                className="w-full p-2 text-black rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleChange(e)}
               />
             </div>
@@ -80,7 +91,8 @@ const SignUp = () => {
                 id="email"
                 placeholder="test@example.com"
                 value={infos.email}
-                className="w-full p-2 outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-black"
+                autoComplete="email"
+                className="w-full p-2 text-black rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleChange(e)}
               />
             </div>
@@ -98,12 +110,13 @@ const SignUp = () => {
                   id="password"
                   placeholder="password"
                   value={infos.password}
+                  autoComplete="current-password"
                   className="w-[90%] p-2 outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-black"
                   onChange={(e) => handleChange(e)}
                 />
                 <p
                   onClick={togglePasswordVisibility}
-                  className="cursor-pointer bg-gradient-to-r from-cyan-500 to-blue-500 p-3 rounded-md"
+                  className="p-3 rounded-md cursor-pointer bg-gradient-to-r from-cyan-500 to-blue-500"
                 >
                   {hidden ? <HiMiniEyeSlash /> : <IoEyeSharp />}
                 </p>
@@ -113,24 +126,24 @@ const SignUp = () => {
             {/* submit button */}
             <button
               type="submit"
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 w-full mt-5 py-2 rounded-md focus:ring-2 focus:ring-white"
+              className="w-full py-2 mt-5 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 focus:ring-2 focus:ring-white"
             >
               SignUp
             </button>
           </form>
 
           {/* google button */}
-          <button className="flex items-center justify-center gap-2 outline p-2 rounded-md mt-5 w-full hover:bg-gradient-to-r from-cyan-500 to-blue-500">
+          <button className="flex items-center justify-center w-full gap-2 p-2 mt-5 rounded-md outline hover:bg-gradient-to-r from-cyan-500 to-blue-500">
             <FcGoogle size={30} />
             <span>Continue with Google</span>
           </button>
 
           {/* already text */}
-          <p className="mt-4 flex items-center justify-between">
+          <p className="flex items-center justify-between mt-4">
             <span>Already have an account ?</span>{" "}
             <Link
               to="/sign-in"
-              className="italic bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text"
+              className="italic text-transparent bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
             >
               Sign In
             </Link>

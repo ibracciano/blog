@@ -4,10 +4,15 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/userSlice";
+import axios from "axios";
+import { api } from "../utils/api";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   // console.log(location);
   const { currentUser } = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
@@ -35,18 +40,30 @@ const Header = () => {
     { name: "Projects", path: "/projects" },
   ];
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(api.signOut);
+      if (response.data.success) {
+        dispatch(logoutUser());
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.error(error.response.data.message);
+    }
+  };
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="relative text-white bg-slate-950">
         {/* navgation for desktop */}
         <nav className="w-[90%] md:w-[80%] mx-auto flex items-center justify-between py-4">
           {/* Logo */}
-          <h1>
+          <Link to="/">
             <span className="p-1 text-xl font-bold rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
               My
             </span>
             <span className="font-bold">BLOG</span>
-          </h1>
+          </Link>
 
           {/* searchBar */}
           <form
@@ -74,17 +91,18 @@ const Header = () => {
           {/* menu */}
           <ul className="items-center hidden gap-5 md:flex">
             {links.map((link, index) => (
-              <NavLink
-                to={link.path}
-                key={index}
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black"
-                    : ""
-                }
-              >
-                {link.name}{" "}
-              </NavLink>
+              <li key={index}>
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black px-2"
+                      : ""
+                  }
+                >
+                  {link.name}{" "}
+                </NavLink>
+              </li>
             ))}
           </ul>
 
@@ -106,17 +124,23 @@ const Header = () => {
               {/* name profile */}
               {/* <p>{currentUser.username.slice(0, 4)}</p> */}
               {openModal && (
-                <div className="absolute flex flex-col bg-slate-800 top-[72px] right-10 rounded-md">
-                  <p className="px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">{`@ ${currentUser.username}`}</p>
+                <div className="flex flex-col bg-slate-800 fixed top-[72px] right-16 md:right-24 rounded-md">
+                  <p className="flex flex-col px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
+                    <span>{`@ ${currentUser.username}`}</span>
+                    <span>{currentUser.email}</span>
+                  </p>
                   <Link
                     to={`/dashboard/profile/${currentUser.username}`}
                     className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900"
                   >
                     My Profile
                   </Link>
-                  <span className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900">
+                  <button
+                    className="px-2 py-1 border rounded-md text-start border-slate-700 hover:bg-slate-900"
+                    onClick={handleLogout}
+                  >
                     SignOut
-                  </span>
+                  </button>
                 </div>
               )}
             </div>
@@ -140,17 +164,18 @@ const Header = () => {
         {isMenuOpen && (
           <ul className="w-full px-[5%] py-3 flex flex-col gap-1 md:hidden absolute top-[70px] bg-slate-950">
             {links.map((link, index) => (
-              <NavLink
-                to={link.path}
-                key={index}
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-slate-900 border-2 border-slate-800 py-1 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black"
-                    : "border-2 border-slate-800 py-1 rounded-md bg-slate-900"
-                }
-              >
-                {link.name}{" "}
-              </NavLink>
+              <li key={index} className="w-full">
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "px-2 w-full inline-flex bg-slate-900 border-2 border-slate-800 py-1 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black"
+                      : "px-2 inline-flex w-full border-2 border-slate-800 py-1 rounded-md bg-slate-900"
+                  }
+                >
+                  {link.name}{" "}
+                </NavLink>
+              </li>
             ))}
           </ul>
         )}
