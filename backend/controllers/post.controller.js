@@ -1,6 +1,9 @@
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 
+// console.error("Erreur dans l'ajout du post", error)
+// res.status(500).json({ success: false, message: "Erreur dans l'ajout du post" })
+
 export const addPost = async (req, res) => {
     // récupérer les données du post
     const { title, content, image, category } = req.body
@@ -37,4 +40,37 @@ export const addPost = async (req, res) => {
         res.status(500).json({ success: false, message: "Erreur dans l'ajout du post" })
     }
 
+}
+
+export const getPosts = async (req, res) => {
+    const userId = req.userId
+    if (!userId) {
+        return res.status(404).json({ success: false, message: "veuillez vous connecter" })
+    }
+    try {
+        const posts = await Post.find({})
+        res.status(200).json({ success: true, message: 'Posts récupérés avec succès', data: posts })
+    } catch (error) {
+        console.error("Erreur dans getPosts", error)
+        res.status(500).json({ success: false, message: "Erreur dans getPosts" })
+    }
+}
+
+export const deletePost = async (req, res) => {
+    const userId = req.userId
+    const { idPost } = req.body
+    console.log(idPost)
+
+
+    if (!userId) {
+        return res.status(404).json({ success: false, message: "veuillez vous connecter" })
+    }
+
+    try {
+        await Post.findByIdAndDelete(idPost)
+        res.status(200).json({ success: true, message: 'Post supprimé avec succès' })
+    } catch (error) {
+        console.error("Erreur dans deletePost", error)
+        res.status(500).json({ success: false, message: "Erreur dans deletePost" })
+    }
 }

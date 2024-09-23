@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/userSlice";
 import CreatePost from "./pages/admin/CreatePost";
+import AllPosts from "./pages/admin/AllPosts";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -61,6 +62,11 @@ const App = () => {
             {
               path: "create-post",
               element: <CreatePost />,
+              loader: verifyAdminAuthentication,
+            },
+            {
+              path: "all-posts",
+              element: <AllPosts />,
               loader: verifyAdminAuthentication,
             },
           ],

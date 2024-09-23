@@ -27,7 +27,7 @@ const CreatePost = () => {
       toast.error("image was not uploaded");
     }
     const uploadImageCloudinary = await uploadImage(file);
-    console.log(uploadImageCloudinary);
+    // console.log(uploadImageCloudinary);
     setPost({ ...post, image: uploadImageCloudinary.secure_url });
   };
 
@@ -60,7 +60,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full pt-24 pb-40 md:pt-24">
+    <div className="w-full pb-40 pt-28 md:pt-24">
       <div className="flex flex-col px-4">
         <h1 className="mb-2 text-xl text-center md:text-3xl">Create a Post</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmitPost}>

@@ -37,10 +37,9 @@ const SignIn = () => {
         // dispatch(loginUser(res.data));
         // Reset form fields
         setInfos({ email: "", password: "" });
+        // setTimeout(() => {}, 1000);
         window.location.reload();
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+        navigate("/");
       }
       // console.log(res);
     } catch (error) {

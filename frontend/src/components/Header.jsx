@@ -46,6 +46,7 @@ const Header = () => {
       if (response.data.success) {
         dispatch(logoutUser());
         toast.success(response.data.message);
+        window.location.reload();
       }
     } catch (error) {
       console.error(error.response.data.message);
@@ -135,6 +136,16 @@ const Header = () => {
                   >
                     My Profile
                   </Link>
+
+                  {currentUser.role === "admin" && (
+                    <Link
+                      to={`/dashboard`}
+                      className="px-2 py-1 border rounded-md border-slate-700 hover:bg-slate-900"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+
                   <button
                     className="px-2 py-1 border rounded-md text-start border-slate-700 hover:bg-slate-900"
                     onClick={handleLogout}

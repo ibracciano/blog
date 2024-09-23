@@ -66,7 +66,7 @@ const DashProfile = () => {
   };
 
   // supprimer mon compte
-  const handleRemove = async () => {
+  const handleDeleteAccount = async () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -97,23 +97,10 @@ const DashProfile = () => {
         }
       }
     });
-    // try {
-    //   const response = await axios.post(api.removeProfileUser, {
-    //     id: currentUser._id,
-    //   });
-
-    //   if (response.data.success) {
-    //     dispatch(logoutUser());
-    //     toast.success(response.data.message);
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   console.error(error.response.data.message);
-    // }
   };
 
   return (
-    <div className="w-full pt-5 pb-40 md:pt-24">
+    <div className="w-full pt-10 pb-40 md:pt-24">
       <h1 className="mb-2 text-xl text-center md:text-3xl">My Profile</h1>
       <form
         className="flex flex-col items-center justify-center gap-4 py-8 bg-black border-t-2 border-b-2 border-cyan-500 md:mt-10"
@@ -191,7 +178,7 @@ const DashProfile = () => {
         <div className="flex items-center justify-between gap-20 md:gap-[250px]">
           <span
             className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
-            onClick={handleRemove}
+            onClick={handleDeleteAccount}
           >
             Delete Account
           </span>
