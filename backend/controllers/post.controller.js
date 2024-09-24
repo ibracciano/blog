@@ -44,6 +44,7 @@ export const addPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     const userId = req.userId
+
     if (!userId) {
         return res.status(404).json({ success: false, message: "veuillez vous connecter" })
     }
@@ -59,7 +60,7 @@ export const getPosts = async (req, res) => {
 export const deletePost = async (req, res) => {
     const userId = req.userId
     const { idPost } = req.body
-    console.log(idPost)
+    // console.log(idPost)
 
 
     if (!userId) {
@@ -72,5 +73,25 @@ export const deletePost = async (req, res) => {
     } catch (error) {
         console.error("Erreur dans deletePost", error)
         res.status(500).json({ success: false, message: "Erreur dans deletePost" })
+    }
+}
+
+export const updatePost = async (req, res) => {
+    const userId = req.userId
+    const post = req.body
+    const { idPost } = req.params
+    // console.log(idPost)
+
+
+    if (!userId) {
+        return res.status(404).json({ success: false, message: "veuillez vous connecter" })
+    }
+
+    try {
+        await Post.findByIdAndUpdate(idPost, post, { new: true })
+        res.status(200).json({ success: true, message: 'Post mis à jour avec succès' })
+    } catch (error) {
+        console.error("Erreur dans updatePost", error)
+        res.status(500).json({ success: false, message: "Erreur dans updatePost" })
     }
 }

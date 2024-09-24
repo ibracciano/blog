@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkAuth, forgotPassword, google, logout, resetPassword, signin, signup, userRemoveProfile, userUpdateProfile, verifyEmail } from '../controllers/user.controller.js';
+import { checkAuth, deleteSingleUser, forgotPassword, getAllUsers, google, logout, resetPassword, signin, signup, userRemoveProfile, userUpdateProfile, verifyEmail } from '../controllers/user.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 
 const userRouter = express.Router();
@@ -35,6 +35,13 @@ userRouter.post('/update-profile', verifyToken, userUpdateProfile)
 
 // route pour supprimer un utilisateur
 userRouter.post('/remove-profile', verifyToken, userRemoveProfile)
+
+
+// route pour recuperer tous les utilisateurs
+userRouter.get('/get-users', verifyToken, getAllUsers)
+
+// route pour supprimer un utilisateur
+userRouter.post('/delete-user', verifyToken, deleteSingleUser)
 
 
 export default userRouter

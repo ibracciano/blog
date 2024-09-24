@@ -6,9 +6,13 @@ import { MdEdit } from "react-icons/md";
 import { api } from "../utils/api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SinglePost = ({ post }) => {
-  // const handleDeletePost = async (idPost) => {
+  const navigate = useNavigate();
+  const handleEditPost = (item) => {
+    navigate(`/dashboard/update-post/${item._id}`, { state: { item: item } });
+  };
   //   try {
   //     const response = await axios.post(api.deletePost, { idPost });
   //     if (response.data.success) {
@@ -65,7 +69,10 @@ const SinglePost = ({ post }) => {
       </p>
       <p className="flex items-center justify-center">{post.title}</p>
       <p className="flex items-center justify-center">{post.category}</p>
-      <p className="flex items-center justify-center">
+      <p
+        onClick={() => handleEditPost(post)}
+        className="flex items-center justify-center"
+      >
         <MdEdit
           size={10}
           className="w-5 h-5 p-1 bg-teal-300 rounded-full md:w-8 md:h-8"
@@ -73,7 +80,7 @@ const SinglePost = ({ post }) => {
       </p>
       <p
         className="flex items-center justify-center"
-        onClick={() => handleDeletePost(post._id)}
+        onClick={() => handleDeletePost(post)}
       >
         <CiCircleRemove
           size={20}

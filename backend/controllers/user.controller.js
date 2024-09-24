@@ -345,7 +345,6 @@ export const userUpdateProfile = async (req, res) => {
 }
 
 // route pour supprimer un utilisateur
-
 export const userRemoveProfile = async (req, res) => {
     // recuperation des données de la requête
     const { id } = req.body
@@ -376,4 +375,38 @@ export const userRemoveProfile = async (req, res) => {
         console.error("Erreur dans la suppression du profile", error)
         res.status(500).json({ success: false, message: "Erreur dans la suppression du profile" })
     }
+}
+
+// route pour recuperer tous les utilisateurs
+export const getAllUsers = async (req, res) => {
+    try {
+        // récupérer tous les utilisateurs
+        const users = await User.find({})
+
+        return res.status(200).json({ success: true, data: users })
+    } catch (error) {
+        console.error("Erreur dans la récupération des utilisateurs", error)
+        res.status(500).json({ success: false, message: "Erreur dans la récupération des utilisateurs" })
+    }
+}
+
+export const deleteSingleUser = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { id } = req.body
+
+
+        if (!userId) {
+            return res.status(401).json({ success: false, message: "Utilisateur non authentifié" });
+        }
+
+
+        await User.findByIdAndDelete(id)
+        return res.status(200).json({ success: true, message: "Utilisateur supprimé avec succès" });
+
+    } catch (error) {
+        console.error("Erreur dans deleteSingleUser", error)
+        res.status(500).json({ success: false, message: "Erreur dans deleteSingleUser" })
+    }
+
 }

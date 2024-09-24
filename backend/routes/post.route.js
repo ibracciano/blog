@@ -1,5 +1,5 @@
 import express from 'express';
-import { addPost, deletePost, getPosts } from '../controllers/post.controller.js';
+import { addPost, deletePost, getPosts, updatePost } from '../controllers/post.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 
 const postRouter = express.Router();
@@ -10,5 +10,6 @@ postRouter.post('/add-post', verifyToken, addPost);
 // route pour recuperer tous les posts
 postRouter.get('/get-posts', verifyToken, getPosts);
 postRouter.post('/delete-post', verifyToken, deletePost);
+postRouter.put('/update-post/:idPost', verifyToken, updatePost);
 
 export default postRouter;

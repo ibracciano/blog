@@ -20,6 +20,8 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/userSlice";
 import CreatePost from "./pages/admin/CreatePost";
 import AllPosts from "./pages/admin/AllPosts";
+import UpdatePost from "./pages/admin/UpdatePost";
+import AllUsers from "./pages/admin/AllUsers";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -65,8 +67,18 @@ const App = () => {
               loader: verifyAdminAuthentication,
             },
             {
+              path: "update-post/:idPost",
+              element: <UpdatePost />,
+              loader: verifyAdminAuthentication,
+            },
+            {
               path: "all-posts",
               element: <AllPosts />,
+              loader: verifyAdminAuthentication,
+            },
+            {
+              path: "all-users",
+              element: <AllUsers />,
               loader: verifyAdminAuthentication,
             },
           ],

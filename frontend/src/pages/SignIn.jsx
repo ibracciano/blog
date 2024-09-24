@@ -38,9 +38,9 @@ const SignIn = () => {
         // Reset form fields
         setInfos({ email: "", password: "" });
         // setTimeout(() => {}, 1000);
-        window.location.reload();
         navigate("/");
       }
+      window.location.reload();
       // console.log(res);
     } catch (error) {
       toast.error(error.response.data.message);

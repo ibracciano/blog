@@ -11,4 +11,7 @@ export const api = {
     addPost: `${backendURL}/api/post/add-post`,
     getPosts: `${backendURL}/api/post/get-posts`,
     deletePost: `${backendURL}/api/post/delete-post`,
+    updatePost: `${backendURL}/api/post/update-post`,
+    getUsers: `${backendURL}/api/user/get-users`,
+    deleteUser: `${backendURL}/api/user/delete-user`
 }
