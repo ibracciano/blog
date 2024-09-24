@@ -5,6 +5,7 @@ import userRouter from './routes/user.route.js';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './db/config.js';
 import postRouter from './routes/post.route.js';
+import commentRouter from './routes/comment.route.js';
 
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(cors({
 
 app.use('/api/user', userRouter)
 app.use('/api/post', postRouter)
+app.use('/api/comment', commentRouter)
 
 // connection à la base de données
 

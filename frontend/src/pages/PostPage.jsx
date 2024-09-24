@@ -3,6 +3,7 @@
 import moment from "moment";
 import { useLocation } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
+import CommentSection from "../components/CommentSection";
 
 const PostPage = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const PostPage = () => {
       <div className="w-full max-w-4xl mx-auto">
         <CallToAction />
       </div>
+      <CommentSection postId={item._id} />
     </main>
   );
 };

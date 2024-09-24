@@ -13,5 +13,6 @@ export const api = {
     deletePost: `${backendURL}/api/post/delete-post`,
     updatePost: `${backendURL}/api/post/update-post`,
     getUsers: `${backendURL}/api/user/get-users`,
-    deleteUser: `${backendURL}/api/user/delete-user`
+    deleteUser: `${backendURL}/api/user/delete-user`,
+    addComment: `${backendURL}/api/comment/create-comment`,
 }
