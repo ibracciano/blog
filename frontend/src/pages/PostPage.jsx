@@ -2,6 +2,7 @@
 
 import moment from "moment";
 import { useLocation } from "react-router-dom";
+import CallToAction from "../components/CallToAction";
 
 const PostPage = () => {
   const location = useLocation();
@@ -35,6 +36,10 @@ const PostPage = () => {
         dangerouslySetInnerHTML={{ __html: item.content }}
         className="my-5 md:w-[60%] mx-auto post-content"
       ></div>
+
+      <div className="w-full max-w-4xl mx-auto">
+        <CallToAction />
+      </div>
     </main>
   );
 };
