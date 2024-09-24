@@ -24,7 +24,7 @@ const AllPosts = () => {
   // console.log(posts);
 
   return (
-    <div className="px-2 pt-28 md:pt-20">
+    <div className="px-2 pt-36 md:pt-20">
       <div className="grid grid-flow-col grid-cols-5 px-3 py-2 text-[10px] md:text-sm font-bold uppercase rounded-md bg-slate-700">
         <p className="flex items-center justify-center">Date</p>
         <p className="flex items-center justify-center">Image</p>

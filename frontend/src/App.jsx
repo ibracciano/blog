@@ -22,6 +22,7 @@ import CreatePost from "./pages/admin/CreatePost";
 import AllPosts from "./pages/admin/AllPosts";
 import UpdatePost from "./pages/admin/UpdatePost";
 import AllUsers from "./pages/admin/AllUsers";
+import PostPage from "./pages/PostPage";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
         { path: "sign-up", element: <SignUp /> },
         { path: "verify-email", element: <EmailVerify /> },
         { path: "projects", element: <Projects /> },
+        { path: "post/:slug", element: <PostPage /> },
         {
           path: "dashboard",
           element: <Dashbord />,

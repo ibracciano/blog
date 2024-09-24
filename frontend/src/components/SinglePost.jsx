@@ -10,9 +10,13 @@ import { useNavigate } from "react-router-dom";
 
 const SinglePost = ({ post }) => {
   const navigate = useNavigate();
+  const handleNavigate = (item) => {
+    navigate(`/post/${item.slug}`, { state: { item: item } });
+  };
   const handleEditPost = (item) => {
     navigate(`/dashboard/update-post/${item._id}`, { state: { item: item } });
   };
+
   //   try {
   //     const response = await axios.post(api.deletePost, { idPost });
   //     if (response.data.success) {
@@ -67,7 +71,12 @@ const SinglePost = ({ post }) => {
           className="block w-12 rounded-md md:w-20 md:h-10"
         />
       </p>
-      <p className="flex items-center justify-center">{post.title}</p>
+      <p
+        className="flex items-center justify-center cursor-pointer"
+        onClick={() => handleNavigate(post)}
+      >
+        {post.title}
+      </p>
       <p className="flex items-center justify-center">{post.category}</p>
       <p
         onClick={() => handleEditPost(post)}
