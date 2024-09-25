@@ -8,10 +8,12 @@ const commentSchema = new mongoose.Schema(
         },
         postId: {
             type: String,
+            ref: "Post",
             required: true,
         },
         userId: {
             type: String,
+            ref: "User",
             required: true,
         },
         likes: {

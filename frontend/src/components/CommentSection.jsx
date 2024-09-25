@@ -1,15 +1,17 @@
 // import React from 'react'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { api } from "../utils/api";
+import Comment from "./Comment";
 
 const CommentSection = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +36,25 @@ const CommentSection = ({ postId }) => {
       console.log(error);
     }
   };
+
+  const getCommentPost = async () => {
+    try {
+      const response = await axios.get(`${api.getCommentSinglePost}/${postId}`);
+      //   console.log(response.data);
+      if (response.data.success) {
+        setComments(response.data.data);
+      }
+    } catch (error) {
+      console.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    getCommentPost();
+  }, [postId]);
+
+  // console.log(comments);
+
   return (
     <div>
       <div className="w-full max-w-2xl p-3 mx-auto">
@@ -90,6 +111,31 @@ const CommentSection = ({ postId }) => {
               </Alert>
             )} */}
           </form>
+        )}
+
+        {comments.length === 0 ? (
+          <p className="my-5 text-sm">No comments yet!</p>
+        ) : (
+          <>
+            <div className="flex items-center gap-1 my-5 text-sm">
+              <p>Comments</p>
+              <div className="px-2 py-1 border border-gray-400 rounded-sm">
+                <p>{comments.length}</p>
+              </div>
+            </div>
+            {comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                // onLike={handleLike}
+                // onEdit={handleEdit}
+                // onDelete={(commentId) => {
+                //   setShowModal(true);
+                //   setCommentToDelete(commentId);
+                // }}
+              />
+            ))}
+          </>
         )}
       </div>
     </div>

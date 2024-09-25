@@ -23,3 +23,14 @@ export const createComment = async (req, res) => {
         res.status(500).json({ success: false, message: "Erreur dans createComment" })
     }
 }
+
+export const getCommentsByPostId = async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const comments = await Comment.find({ postId: postId }).populate('userId').sort({ creatadAt: -1 });
+        res.status(200).json({ success: true, data: comments });
+    } catch (error) {
+        console.error("Erreur dans getCommentsByPostId", error)
+        res.status(500).json({ success: false, message: "Erreur dans getCommentsByPostId" })
+    }
+}
