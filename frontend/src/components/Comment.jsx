@@ -7,7 +7,7 @@ import axios from "axios";
 import { api } from "../utils/api";
 import { toast } from "react-toastify";
 
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   //   console.log(comment);
   //   const { onLike } = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
@@ -117,7 +117,7 @@ const Comment = ({ comment, onLike, onEdit }) => {
                     </button>
                     <button
                       type="button"
-                      //   onClick={() => onDelete(comment._id)}
+                      onClick={() => onDelete(comment._id)}
                       className="p-1 text-gray-400 rounded-md hover:text-white bg-gradient-to-r from-pink-500 to-rose-500"
                     >
                       Delete

@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js';
-import { createComment, editComment, getCommentsByPostId, likeComment } from '../controllers/comment.controller.js';
+import { createComment, deleteComment, editComment, getCommentsByPostId, likeComment } from '../controllers/comment.controller.js';
 
 const commentRouter = express.Router();
 
@@ -15,5 +15,8 @@ commentRouter.put('/likeComment/:commentId', verifyToken, likeComment);
 
 // route pour modifier un commentaire
 commentRouter.put('/editComment/:commentId', verifyToken, editComment);
+
+// route pour supprimer un commentaire
+commentRouter.delete('/deleteComment/:commentId', verifyToken, deleteComment);
 
 export default commentRouter

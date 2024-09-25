@@ -18,4 +18,5 @@ export const api = {
     getCommentSinglePost: `${backendURL}/api/comment/get-comments`,
     putLikeComment: `${backendURL}/api/comment/likeComment`,
     putEditComment: `${backendURL}/api/comment/editComment`,
+    deleteComment: `${backendURL}/api/comment/deleteComment`,
 }

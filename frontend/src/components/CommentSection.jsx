@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { api } from "../utils/api";
 import Comment from "./Comment";
+import Swal from "sweetalert2";
 
 const CommentSection = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -79,6 +80,38 @@ const CommentSection = ({ postId }) => {
         c._id === comment._id ? { ...c, content: editedContent } : c
       )
     );
+  };
+
+  const onDelete = async (commentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "User has been deleted.",
+          icon: "success",
+        });
+        try {
+          const response = await axios.delete(
+            `${api.deleteComment}/${commentId}`
+          );
+          // console.log(response);
+          if (response.data.success) {
+            setComments(comments.filter((c) => c._id !== commentId));
+            toast.success("Comment deleted successfully.");
+          }
+        } catch (error) {
+          console.log(error.response.data.message);
+        }
+      }
+    });
   };
 
   return (
@@ -155,10 +188,7 @@ const CommentSection = ({ postId }) => {
                 comment={comment}
                 onLike={handleLike}
                 onEdit={handleEdit}
-                // onDelete={(commentId) => {
-                //   setShowModal(true);
-                //   setCommentToDelete(commentId);
-                // }}
+                onDelete={onDelete}
               />
             ))}
           </>

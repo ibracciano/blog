@@ -77,7 +77,7 @@ export const editComment = async (req, res) => {
         }
 
         if (comment.userId !== userId && user.role !== "admin") {
-            return res.status(404).json({ success: false, message: "Vous n'êtes pas autorisé à supprimer le commentaire" });
+            return res.status(404).json({ success: false, message: "Vous n'êtes pas autorisé à modifier le commentaire" });
         }
 
         const editedComment = await Comment.findByIdAndUpdate(
@@ -96,3 +96,26 @@ export const editComment = async (req, res) => {
         res.status(500).json({ success: false, message: "Erreur dans editComment" })
     }
 };
+
+export const deleteComment = async (req, res) => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ success: false, message: "Utilisateur non authentifié" });
+    }
+    try {
+        const user = await User.findById(userId);
+        const comment = await Comment.findById(req.params.commentId);
+        if (!comment) {
+            return res.status(404).json({ success: false, message: "Commentaire non trouvé" });
+        }
+        if (comment.userId !== userId && user.role !== "admin") {
+            return res.status(404).json({ success: false, message: "Vous n'êtes pas autorisé à supprimer le commentaire" });
+        }
+        await Comment.findByIdAndDelete(req.params.commentId);
+        res.status(200).json({ success: true, message: 'commentaire supprimé avec succès' });
+    } catch (error) {
+        console.error("Erreur dans deleteComment", error)
+        res.status(500).json({ success: false, message: "Erreur dans deleteComment" })
+    }
+};
+
