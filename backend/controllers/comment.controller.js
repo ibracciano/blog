@@ -34,3 +34,51 @@ export const getCommentsByPostId = async (req, res) => {
         res.status(500).json({ success: false, message: "Erreur dans getCommentsByPostId" })
     }
 }
+
+export const likeComment = async (req, res) => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ success: false, message: "Utilisateur non authentifié" });
+    }
+    try {
+        const comment = await Comment.findById(req.params.commentId);
+        if (!comment) {
+            return res.status(404).json({ success: false, message: "Commentaire non trouvé" });
+        }
+        const userIndex = comment.likes.indexOf(userId);
+        if (userIndex === -1) {
+            comment.numberOfLikes += 1;
+            comment.likes.push(userId);
+        } else {
+            comment.numberOfLikes -= 1;
+            comment.likes.splice(userIndex, 1);
+        }
+        await comment.save();
+
+        res.status(200).json({ success: true, data: comment });
+    } catch (error) {
+        console.error("Erreur dans likeComment", error)
+        res.status(500).json({ success: false, message: "Erreur dans likeComment" })
+    }
+}
+
+// export const likeComment = async (req, res, next) => {
+//     try {
+//         const comment = await Comment.findById(req.params.commentId);
+//         if (!comment) {
+//             return next(errorHandler(404, 'Comment not found'));
+//         }
+//         const userIndex = comment.likes.indexOf(req.user.id);
+//         if (userIndex === -1) {
+//             comment.numberOfLikes += 1;
+//             comment.likes.push(req.user.id);
+//         } else {
+//             comment.numberOfLikes -= 1;
+//             comment.likes.splice(userIndex, 1);
+//         }
+//         await comment.save();
+//         res.status(200).json(comment);
+//     } catch (error) {
+//         next(error);
+//     }
+// };

@@ -53,7 +53,25 @@ const CommentSection = ({ postId }) => {
     getCommentPost();
   }, [postId]);
 
-  // console.log(comments);
+  const handleLike = async (commentId) => {
+    console.log(commentId);
+    try {
+      const response = await axios.put(`${api.putLikeComment}/${commentId}`);
+      // console.log(response);
+      if (response.data.success) {
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? { ...comment, likes: response.data.data }
+              : comment
+          )
+        );
+      }
+      window.location.reload();
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   return (
     <div>
@@ -127,7 +145,7 @@ const CommentSection = ({ postId }) => {
               <Comment
                 key={comment._id}
                 comment={comment}
-                // onLike={handleLike}
+                onLike={handleLike}
                 // onEdit={handleEdit}
                 // onDelete={(commentId) => {
                 //   setShowModal(true);
