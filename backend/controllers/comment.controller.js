@@ -1,4 +1,5 @@
 import Comment from "../models/comment.model.js";
+import User from "../models/user.model.js";
 
 export const createComment = async (req, res) => {
     const userId = req.userId
@@ -62,23 +63,36 @@ export const likeComment = async (req, res) => {
     }
 }
 
-// export const likeComment = async (req, res, next) => {
-//     try {
-//         const comment = await Comment.findById(req.params.commentId);
-//         if (!comment) {
-//             return next(errorHandler(404, 'Comment not found'));
-//         }
-//         const userIndex = comment.likes.indexOf(req.user.id);
-//         if (userIndex === -1) {
-//             comment.numberOfLikes += 1;
-//             comment.likes.push(req.user.id);
-//         } else {
-//             comment.numberOfLikes -= 1;
-//             comment.likes.splice(userIndex, 1);
-//         }
-//         await comment.save();
-//         res.status(200).json(comment);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+export const editComment = async (req, res) => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ success: false, message: "Utilisateur non authentifié" });
+    }
+
+    try {
+        const user = await User.findById(userId);
+        const comment = await Comment.findById(req.params.commentId);
+        if (!comment) {
+            return res.status(404).json({ success: false, message: "Commentaire non trouvé" });
+        }
+
+        if (comment.userId !== userId && user.role !== "admin") {
+            return res.status(404).json({ success: false, message: "Vous n'êtes pas autorisé à supprimer le commentaire" });
+        }
+
+        const editedComment = await Comment.findByIdAndUpdate(
+            req.params.commentId,
+            {
+                content: req.body.content,
+            },
+            { new: true }
+        );
+
+        await editedComment.save()
+
+        res.status(200).json({ success: true, message: 'commentaire modifié avec succès', data: editedComment });
+    } catch (error) {
+        console.error("Erreur dans editComment", error)
+        res.status(500).json({ success: false, message: "Erreur dans editComment" })
+    }
+};

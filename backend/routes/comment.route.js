@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js';
-import { createComment, getCommentsByPostId, likeComment } from '../controllers/comment.controller.js';
+import { createComment, editComment, getCommentsByPostId, likeComment } from '../controllers/comment.controller.js';
 
 const commentRouter = express.Router();
 
@@ -12,5 +12,8 @@ commentRouter.get('/get-comments/:postId', verifyToken, getCommentsByPostId);
 
 // route pour mettre à jour les likes d'un commentaire
 commentRouter.put('/likeComment/:commentId', verifyToken, likeComment);
+
+// route pour modifier un commentaire
+commentRouter.put('/editComment/:commentId', verifyToken, editComment);
 
 export default commentRouter
