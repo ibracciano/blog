@@ -4,11 +4,34 @@ import moment from "moment";
 import { useLocation } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
+import RelatedPostCard from "../components/RelatedPostCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { api } from "../utils/api";
 
 const PostPage = () => {
   const location = useLocation();
   const { item } = location.state;
   //   console.log(item);
+
+  const [relatedPosts, setRelatedPosts] = useState([]);
+  // fetch related posts
+  useEffect(() => {
+    const fetchRelatedPosts = async () => {
+      try {
+        const response = await axios.get(
+          `${api.getRelatedPosts}?exclude=${item._id}&limit=3`
+        );
+        //   console.log(response.data);
+        if (response.data.success) {
+          setRelatedPosts(response.data.data);
+        }
+      } catch (error) {
+        console.error(error.response.data.message);
+      }
+    };
+    fetchRelatedPosts();
+  }, [item._id]);
 
   return (
     <main className="p-3 pt-20">
@@ -42,6 +65,16 @@ const PostPage = () => {
         <CallToAction />
       </div>
       <CommentSection postId={item._id} />
+
+      <div className="flex flex-col items-center justify-center mb-5 ">
+        <h1 className="mt-5 text-xl">Related Posts</h1>
+        <div className="flex flex-wrap justify-center gap-5 mt-5 ">
+          {relatedPosts &&
+            relatedPosts.map((post) => (
+              <RelatedPostCard key={post._id} post={post} />
+            ))}
+        </div>
+      </div>
     </main>
   );
 };

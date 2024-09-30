@@ -1,5 +1,5 @@
 import express from 'express';
-import { addPost, deletePost, getPosts, updatePost } from '../controllers/post.controller.js';
+import { addPost, deletePost, getPosts, getRelatedPosts, updatePost } from '../controllers/post.controller.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 
 const postRouter = express.Router();
@@ -11,5 +11,6 @@ postRouter.post('/add-post', verifyToken, addPost);
 postRouter.get('/get-posts', verifyToken, getPosts);
 postRouter.post('/delete-post', verifyToken, deletePost);
 postRouter.put('/update-post/:idPost', verifyToken, updatePost);
+postRouter.get('/related-posts', verifyToken, getRelatedPosts)
 
 export default postRouter;

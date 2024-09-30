@@ -57,6 +57,20 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export const getRelatedPosts = async (req, res) => {
+    const limit = req.query.limit
+    // console.log(limit)
+    const exclude = req.query.exclude
+    // console.log(exclude)
+    try {
+        const relatedPosts = await Post.find({ _id: { $ne: exclude } }).limit(limit)
+        res.status(200).json({ success: true, message: 'Posts récupérés avec succès', data: relatedPosts })
+    } catch (error) {
+        console.error("Erreur dans getRelatedPosts", error)
+        res.status(500).json({ success: false, message: "Erreur dans getRelatedPosts" })
+    }
+}
+
 export const deletePost = async (req, res) => {
     const userId = req.userId
     const { idPost } = req.body
