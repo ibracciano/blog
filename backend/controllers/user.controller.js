@@ -382,6 +382,7 @@ export const getAllUsers = async (req, res) => {
     try {
         // récupérer tous les utilisateurs
         const users = await User.find({})
+        const totalUsers = User.countDocuments()
 
         return res.status(200).json({ success: true, data: users })
     } catch (error) {

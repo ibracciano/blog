@@ -24,6 +24,7 @@ import UpdatePost from "./pages/admin/UpdatePost";
 import AllUsers from "./pages/admin/AllUsers";
 import PostPage from "./pages/PostPage";
 import DashComment from "./pages/admin/DashComment";
+import DashComponent from "./components/DashComponent";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -59,6 +60,11 @@ const App = () => {
           path: "dashboard",
           element: <Dashbord />,
           children: [
+            {
+              path: "",
+              element: <DashComponent />,
+              loader: verifyUserAuthentication,
+            },
             {
               path: "profile/:username",
               element: <DashProfile />,
