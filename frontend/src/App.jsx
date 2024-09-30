@@ -25,6 +25,7 @@ import AllUsers from "./pages/admin/AllUsers";
 import PostPage from "./pages/PostPage";
 import DashComment from "./pages/admin/DashComment";
 import DashComponent from "./components/DashComponent";
+import NotFound from "./pages/NotFound";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
   const routes = createBrowserRouter([
     {
       path: "/",
+      errorElement: <NotFound />,
       element: <Layout />,
       children: [
         { path: "", element: <Home /> },

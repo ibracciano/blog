@@ -4,6 +4,10 @@ import RelatedPostCard from "../components/RelatedPostCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { api } from "../utils/api";
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -19,7 +23,12 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <div className="flex flex-col max-w-6xl gap-6 px-3 mx-auto p-28 ">
+      <div
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+        className="flex flex-col max-w-6xl gap-6 px-3 mx-auto p-28 "
+      >
         <h1 className="text-3xl font-bold lg:text-6xl">Welcome to my Blog</h1>
         <p className="text-xs text-gray-500 sm:text-sm">
           Here you'll find a variety of articles and tutorials on topics such as
@@ -32,7 +41,12 @@ export default function Home() {
           View all posts
         </Link>
       </div>
-      <div className="p-3 bg-amber-100 dark:bg-slate-700">
+      <div
+        data-aos="flip-left"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+        className="p-3 bg-amber-100 dark:bg-slate-700"
+      >
         <CallToAction />
       </div>
 

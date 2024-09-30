@@ -1,5 +1,5 @@
 // import React from 'react'
-import { CiSearch } from "react-icons/ci";
+
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
@@ -178,7 +178,7 @@ const Header = () => {
           ) : (
             <Link
               to="/sign-in"
-              className="px-2 py-1 transition-all duration-100 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 hover:outline"
+              className="text-[10px] md:text-base px-2 py-1 transition-all duration-100 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 hover:outline"
             >
               Sign In
             </Link>
