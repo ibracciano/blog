@@ -24,20 +24,8 @@ const AllPosts = () => {
   // console.log(posts);
 
   return (
-    <div className="px-2 pt-36 md:pt-20">
-      <div className="grid grid-flow-col grid-cols-5 px-3 py-2 text-[10px] md:text-sm font-bold uppercase rounded-md bg-slate-700">
-        <p className="flex items-center justify-center">Date</p>
-        <p className="flex items-center justify-center">Image</p>
-        <p className="flex items-center justify-center">Title</p>
-        <p className="flex items-center justify-center">Category</p>
-        <p className="flex items-center justify-center">Edit</p>
-        <p className="flex items-center justify-center">Delete</p>
-      </div>
-      <div className="">
-        {posts.map((post) => (
-          <SinglePost key={post._id} post={post} />
-        ))}
-      </div>
+    <div className="px-2 pt-[250px] md:pt-20">
+      <SinglePost posts={posts} />
     </div>
   );
 };

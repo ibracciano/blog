@@ -5,6 +5,8 @@ import moment from "moment";
 import { CiCircleRemove } from "react-icons/ci";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Table } from "flowbite-react";
+import { MdEdit } from "react-icons/md";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -59,37 +61,32 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="px-2 pt-[200px] md:pt-20">
-      {/* <div className="">
-        {users.map((user) => (
-          <SingleUser key={user._id} user={user} />
-        ))}
-      </div> */}
-      <table className="w-full md:w-full text-[5px] md:text-sm">
-        <thead className="rounded-md bg-slate-700">
-          <tr>
-            <th>Date</th>
-            <th>Image</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody className="bg-black">
+    <div className="px-2 overflow-x-auto pt-[250px] md:pt-20">
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>Date</Table.HeadCell>
+          <Table.HeadCell>Image</Table.HeadCell>
+          <Table.HeadCell>Username</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell>Role</Table.HeadCell>
+          <Table.HeadCell>Action</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="text-white divide-y">
           {users.map((user) => (
-            <tr className="text-center" key={user._id}>
-              <td>{moment(user.createdAt).format("LL")}</td>
-              <td>
+            <Table.Row key={user._id} className="bg-gray-800 border-gray-700">
+              <Table.Cell className="font-medium whitespace-nowrap ">
+                {moment(user.createdAt).format("LL")}
+              </Table.Cell>
+              <Table.Cell>
                 <img
                   src={user.photo}
                   alt=""
-                  className="w-5 h-5 rounded-full md:w-10 md:h-10 mx-[20%] md:mx-[20%]"
+                  className="block w-12 rounded-md md:w-10 md:h-10"
                 />
-              </td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td className="text-center">
+              </Table.Cell>
+              <Table.Cell>{user.username}</Table.Cell>
+              <Table.Cell>{user.email}</Table.Cell>
+              <Table.Cell>
                 {user.role === "admin" ? (
                   <span className="p-1 bg-gray-700 rounded-md">
                     {user.role}
@@ -99,20 +96,20 @@ const AllUsers = () => {
                     {user.role}
                   </span>
                 )}
-              </td>
-              <td
-                className="flex items-center justify-center cursor-pointer"
+              </Table.Cell>
+              <Table.Cell
                 onClick={() => handleDeleteUser(user._id)}
+                className="cursor-pointer"
               >
                 <CiCircleRemove
                   size={20}
-                  className="w-5 h-5 p-1 rounded-full bg-cyan-600 md:w-8 md:h-8"
+                  className="p-1 text-red-500 rounded-full md:w-8 md:h-8"
                 />
-              </td>
-            </tr>
+              </Table.Cell>
+            </Table.Row>
           ))}
-        </tbody>
-      </table>
+        </Table.Body>
+      </Table>
     </div>
   );
 };

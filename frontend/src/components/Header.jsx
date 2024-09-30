@@ -67,27 +67,7 @@ const Header = () => {
           </Link>
 
           {/* searchBar */}
-          {/* <form
-            className={`flex items-center justify-between bg-slate-800 p-2 rounded-md ${
-              openSearchTerm
-                ? "w-[150px] transition-all duration-700"
-                : "w-[40px] transition-all duration-700"
-            }  md:w-[300px]`}
-          >
-            <input
-              type="text"
-              placeholder="search..."
-              className={`outline-none bg-slate-800 md:flex ${
-                openSearchTerm ? "w-[70px]" : "w-0"
-              } `}
-            />
-            <span
-              className="p-1 rounded-full bg-gradient-to-r from-slate-500 to-gray-700"
-              onClick={() => setOpenSearchTerm(!openSearchTerm)}
-            >
-              <CiSearch />
-            </span>
-          </form> */}
+
           <form className="mx-2 md:w-[40%] bg-slate-800">
             <label
               htmlFor="default-search"

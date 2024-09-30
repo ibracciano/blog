@@ -7,8 +7,9 @@ import { api } from "../utils/api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Table } from "flowbite-react";
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ posts }) => {
   const navigate = useNavigate();
   const handleNavigate = (item) => {
     navigate(`/post/${item.slug}`, { state: { item: item } });
@@ -16,17 +17,6 @@ const SinglePost = ({ post }) => {
   const handleEditPost = (item) => {
     navigate(`/dashboard/update-post/${item._id}`, { state: { item: item } });
   };
-
-  //   try {
-  //     const response = await axios.post(api.deletePost, { idPost });
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     // console.error(error.response.data.message);
-  //   }
-  // };
 
   const handleDeletePost = async (idPost) => {
     Swal.fire({
@@ -60,42 +50,58 @@ const SinglePost = ({ post }) => {
   };
 
   return (
-    <div className="grid max-w-md grid-cols-5 grid-flow-col px-5 py-3 text-center bg-black rounded-md md:max-w-6xl text-[10px] md:text-sm">
-      <p className="flex items-center justify-center">
-        {moment(post.createdAt).format("LL")}
-      </p>
-      <p className="flex items-center justify-center">
-        <img
-          src={post.image}
-          alt=""
-          className="block w-12 rounded-md md:w-20 md:h-10"
-        />
-      </p>
-      <p
-        className="flex items-center justify-center cursor-pointer"
-        onClick={() => handleNavigate(post)}
-      >
-        {post.title}
-      </p>
-      <p className="flex items-center justify-center">{post.category}</p>
-      <p
-        onClick={() => handleEditPost(post)}
-        className="flex items-center justify-center"
-      >
-        <MdEdit
-          size={10}
-          className="w-5 h-5 p-1 bg-teal-300 rounded-full md:w-8 md:h-8"
-        />
-      </p>
-      <p
-        className="flex items-center justify-center"
-        onClick={() => handleDeletePost(post)}
-      >
-        <CiCircleRemove
-          size={20}
-          className="w-5 h-5 p-1 bg-red-600 rounded-full md:w-8 md:h-8"
-        />
-      </p>
+    <div className="overflow-x-auto">
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>Date</Table.HeadCell>
+          <Table.HeadCell>Image</Table.HeadCell>
+          <Table.HeadCell>Title</Table.HeadCell>
+          <Table.HeadCell>Category</Table.HeadCell>
+          <Table.HeadCell>Edit</Table.HeadCell>
+          <Table.HeadCell>Delete</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="text-white divide-y">
+          {posts.map((post) => (
+            <Table.Row key={post._id} className="bg-gray-800 border-gray-700">
+              <Table.Cell className="font-medium whitespace-nowrap ">
+                {moment(post.createdAt).format("LL")}
+              </Table.Cell>
+              <Table.Cell>
+                <img
+                  src={post.image}
+                  alt=""
+                  className="block w-12 rounded-md md:w-20 md:h-10"
+                />
+              </Table.Cell>
+              <Table.Cell
+                className="cursor-pointer"
+                onClick={() => handleNavigate(post)}
+              >
+                {post.title}
+              </Table.Cell>
+              <Table.Cell>{post.category}</Table.Cell>
+              <Table.Cell
+                onClick={() => handleEditPost(post)}
+                className="cursor-pointer"
+              >
+                <MdEdit
+                  size={20}
+                  className="p-1 text-teal-300 rounded-full md:w-8 md:h-8"
+                />
+              </Table.Cell>
+              <Table.Cell
+                onClick={() => handleDeletePost(post)}
+                className="cursor-pointer"
+              >
+                <CiCircleRemove
+                  size={20}
+                  className="p-1 text-red-500 rounded-full md:w-8 md:h-8"
+                />
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
     </div>
   );
 };

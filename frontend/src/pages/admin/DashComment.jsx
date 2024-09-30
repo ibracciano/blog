@@ -5,6 +5,7 @@ import moment from "moment";
 import { CiCircleRemove } from "react-icons/ci";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Table } from "flowbite-react";
 
 const DashComment = () => {
   const [comments, setComments] = useState([]);
@@ -59,44 +60,40 @@ const DashComment = () => {
   };
 
   return (
-    <div className="px-2 pt-[200px] md:pt-20">
-      {/* <div className="">
-        {users.map((user) => (
-          <SingleUser key={user._id} user={user} />
-        ))}
-      </div> */}
-      <table className="w-full md:w-full text-[5px] md:text-sm">
-        <thead className="rounded-md bg-slate-700">
-          <tr>
-            <th>Updated At</th>
-            <th>Content</th>
-            <th>Number of Likes</th>
-            <th>PostId</th>
-            <th>UserId</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody className="bg-black">
+    <div className="overflow-x-auto px-2 pt-[250px] md:pt-20">
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>Updated At</Table.HeadCell>
+          <Table.HeadCell>Content</Table.HeadCell>
+          <Table.HeadCell>Number of Likes</Table.HeadCell>
+          <Table.HeadCell>PostId</Table.HeadCell>
+          <Table.HeadCell>UserId</Table.HeadCell>
+          <Table.HeadCell>Action</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="text-white divide-y">
           {comments.map((comment) => (
-            <tr className="text-center" key={comment._id}>
-              <td>{moment(comment.updatedAt).format("LL")}</td>
-              <td>{comment.content}</td>
-              <td>{comment.numberOfLikes}</td>
-              <td>{comment.postId}</td>
-              <td className="text-center">{comment.userId}</td>
-              <td
-                className="flex items-center justify-center cursor-pointer"
-                onClick={() => handleDeleteComment(comment._id)}
-              >
+            <Table.Row
+              key={comment._id}
+              className="bg-gray-800 border-gray-700"
+            >
+              <Table.Cell className="font-medium whitespace-nowrap ">
+                {moment(comment.createdAt).format("LL")}
+              </Table.Cell>
+              <Table.Cell>{comment.content}</Table.Cell>
+              <Table.Cell>{comment.numberOfLikes}</Table.Cell>
+              <Table.Cell>{comment.postId}</Table.Cell>
+              <Table.Cell>{comment.userId}</Table.Cell>
+              <Table.Cell>
                 <CiCircleRemove
                   size={20}
-                  className="w-5 h-5 p-1 rounded-full bg-cyan-600 md:w-8 md:h-8"
+                  className="w-5 h-5 p-1 text-red-500 rounded-full md:w-8 md:h-8"
+                  onClick={() => handleDeleteComment(comment._id)}
                 />
-              </td>
-            </tr>
+              </Table.Cell>
+            </Table.Row>
           ))}
-        </tbody>
-      </table>
+        </Table.Body>
+      </Table>
     </div>
   );
 };
