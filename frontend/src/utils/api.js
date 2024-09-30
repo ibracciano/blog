@@ -16,6 +16,7 @@ export const api = {
     getUsers: `${backendURL}/api/user/get-users`,
     deleteUser: `${backendURL}/api/user/delete-user`,
     addComment: `${backendURL}/api/comment/create-comment`,
+    getComments: `${backendURL}/api/comment/get-comments`,
     getCommentSinglePost: `${backendURL}/api/comment/get-comments`,
     putLikeComment: `${backendURL}/api/comment/likeComment`,
     putEditComment: `${backendURL}/api/comment/editComment`,

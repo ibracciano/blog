@@ -23,6 +23,7 @@ import AllPosts from "./pages/admin/AllPosts";
 import UpdatePost from "./pages/admin/UpdatePost";
 import AllUsers from "./pages/admin/AllUsers";
 import PostPage from "./pages/PostPage";
+import DashComment from "./pages/admin/DashComment";
 // import { privateRoute } from "./utils/hook"
 
 const App = () => {
@@ -81,6 +82,11 @@ const App = () => {
             {
               path: "all-users",
               element: <AllUsers />,
+              loader: verifyAdminAuthentication,
+            },
+            {
+              path: "dash-comments",
+              element: <DashComment />,
               loader: verifyAdminAuthentication,
             },
           ],

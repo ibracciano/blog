@@ -36,6 +36,16 @@ export const getCommentsByPostId = async (req, res) => {
     }
 }
 
+export const getComments = async (req, res) => {
+    try {
+        const comments = await Comment.find().sort({ creatadAt: -1 }).skip(0).limit(9);
+        res.status(200).json({ success: true, data: comments });
+    } catch (error) {
+        console.error("Erreur dans getComments", error)
+        res.status(500).json({ success: false, message: "Erreur dans getComments" })
+    }
+}
+
 export const likeComment = async (req, res) => {
     const userId = req.userId;
     if (!userId) {

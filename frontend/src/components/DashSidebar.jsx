@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BsFileEarmarkPost } from "react-icons/bs";
 import { FaUsersViewfinder } from "react-icons/fa6";
+import { MdComment } from "react-icons/md";
 
 const DashSidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -39,6 +40,20 @@ const DashSidebar = () => {
             <Link to="/dashboard/all-users" className="flex items-center gap-5">
               <FaUsersViewfinder size={20} />
               <p className="text-xl">Users</p>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {currentUser.role === "admin" && (
+        <div className="px-5 py-2 mx-5 transition-all duration-500 rounded-md bg-slate-600 hover:bg-slate-700">
+          <div>
+            <Link
+              to="/dashboard/dash-comments"
+              className="flex items-center gap-5"
+            >
+              <MdComment size={20} />
+              <p className="text-xl">Comments</p>
             </Link>
           </div>
         </div>
