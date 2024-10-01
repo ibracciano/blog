@@ -105,6 +105,10 @@ const SignIn = () => {
               </div>
             </div>
 
+            <p className="text-xs text-end hover:text-gray-500">
+              <Link to="/forgot-password">Forgot password ?</Link>
+            </p>
+
             {/* submit button */}
             <button
               type="submit"

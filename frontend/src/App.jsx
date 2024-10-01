@@ -29,6 +29,8 @@ import NotFound from "./pages/NotFound";
 // import { privateRoute } from "./utils/hook"
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 // ..
 AOS.init();
 
@@ -59,6 +61,8 @@ const App = () => {
         { path: "about", element: <About /> },
         { path: "sign-in", element: <SignIn /> },
         { path: "sign-up", element: <SignUp /> },
+        { path: "forgot-password", element: <ForgotPassword /> },
+        { path: "reset-password/:token", element: <ResetPassword /> },
         { path: "verify-email", element: <EmailVerify /> },
         { path: "projects", element: <Projects /> },
         { path: "post/:slug", element: <PostPage /> },

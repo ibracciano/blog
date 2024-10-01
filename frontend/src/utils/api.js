@@ -6,6 +6,8 @@ export const api = {
     signOut: `${backendURL}/api/user/logout`,
     EmailVerify: `${backendURL}/api/user/verify-email`,
     AuthVerify: `${backendURL}/api/user/check-auth`,
+    forgotPassword: `${backendURL}/api/user/forgot-password`,
+    resetPassword: `${backendURL}/api/user/reset-password`,
     updateProfileUser: `${backendURL}/api/user/update-profile`,
     removeProfileUser: `${backendURL}/api/user/remove-profile`,
     addPost: `${backendURL}/api/post/add-post`,

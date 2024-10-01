@@ -1,7 +1,9 @@
 import User from '../models/user.model.js'
 import bcryptjs from 'bcryptjs'
+import cryptoRandomString from 'crypto-random-string';
 import { generateTokenAndCookie } from '../utils/generateTokenAndCookie.js'
-import { sendEmailVerification, sendEmailWelcome } from '../nodemailer/email.js'
+import { sendEmailResetPassword, sendEmailVerification, sendEmailWelcome, sendResetSuccessEmail } from '../nodemailer/email.js'
+
 
 export const signup = async (req, res) => {
     try {
@@ -121,7 +123,7 @@ export const forgotPassword = async (req, res) => {
         }
 
         // générer un nouveau code de vérification
-        const newCode = crypto.randomBytes(32).toString("hex")
+        const newCode = cryptoRandomString({ length: 32, type: 'alphanumeric' })
         const newCodeExpireAt = Date.now() + 1 * 60 * 60 * 1000
 
         // mettre à jour le code de vérification et la date d'expiration
@@ -132,7 +134,7 @@ export const forgotPassword = async (req, res) => {
         await user.save()
 
         // envoyer un email de réinitialisation du mot de passe
-        await sendEmailResetPassword(user.email, `${process.env.CLIENT_URL}/reset-password/${newCode}`)
+        sendEmailResetPassword(user.email, `${process.env.CLIENT_URL}/reset-password/${newCode}`)
 
         // envoyer une réponse
         res.status(200).json({ success: true, message: "Email de réinitialisation du mot de passe envoyé" })
@@ -183,7 +185,9 @@ export const verifyEmail = async (req, res) => {
 
 // controller reinitialisation de mot de passe
 export const resetPassword = async (req, res) => {
+    // console.log(req.params)
     const { code } = req.params
+    // console.log(token)
 
     const { password } = req.body
 

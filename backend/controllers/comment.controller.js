@@ -38,7 +38,7 @@ export const getCommentsByPostId = async (req, res) => {
 
 export const getComments = async (req, res) => {
     const currentPage = parseInt(req.query.page);
-    console.log(currentPage)
+    // console.log(currentPage)
     const perPage = 6
     try {
         const totalComments = await Comment.countDocuments()
@@ -50,7 +50,7 @@ export const getComments = async (req, res) => {
             return res.status(404).json({ success: false, message: "Page non trouvée" });
         }
 
-        res.status(200).json({ success: true, data: comments, currentPage, totalPages });
+        res.status(200).json({ success: true, data: comments, currentPage, totalPages, totalComments });
         // res.status(200).json({ success: true, data: comments });
     } catch (error) {
         console.error("Erreur dans getComments", error)

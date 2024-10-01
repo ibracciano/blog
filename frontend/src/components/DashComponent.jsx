@@ -40,7 +40,7 @@ export default function DashboardComp() {
     const getAllPosts = async () => {
       try {
         const response = await axios.get(api.getPosts);
-        //   console.log(response.data);
+        // console.log(response);
         if (response.data.success) {
           setPosts(response.data.data);
           setTotalPosts(response.data.data.length);
@@ -52,10 +52,10 @@ export default function DashboardComp() {
     const getAllComments = async () => {
       try {
         const response = await axios.get(api.getComments);
-        //   console.log(response.data);
+        console.log(response);
         if (response.data.success) {
           setComments(response.data.data);
-          setTotalComments(response.data.data.length);
+          setTotalComments(response.data.totalComments);
         }
       } catch (error) {
         console.error(error.response.data.message);
@@ -66,7 +66,7 @@ export default function DashboardComp() {
       getAllPosts();
       getAllComments();
     }
-  }, [currentUser]);
+  }, [currentUser, comments.length]);
 
   return (
     <div className="p-3 pt-24 md:mx-auto">
