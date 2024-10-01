@@ -2,12 +2,10 @@
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../utils/api";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
   });

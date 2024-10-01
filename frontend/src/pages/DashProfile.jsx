@@ -100,7 +100,7 @@ const DashProfile = () => {
   };
 
   return (
-    <div className="w-full pt-10 pb-40 md:pt-24">
+    <div className="w-full pt-[180px] pb-40 md:pt-24">
       <h1 className="mb-2 text-xl text-center md:text-3xl">My Profile</h1>
       <form
         className="flex flex-col items-center justify-center gap-4 py-8 bg-black border-t-2 border-b-2 border-cyan-500 md:mt-10"

@@ -210,7 +210,7 @@ export const resetPassword = async (req, res) => {
         await user.save()
 
         // envoyé un email de succès 
-        await sendResetSuccessEmail(user.email)
+        sendResetSuccessEmail(user.email)
 
         // envoyer une réponse
         res.status(200).json({

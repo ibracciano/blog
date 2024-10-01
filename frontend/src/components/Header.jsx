@@ -57,7 +57,7 @@ const Header = () => {
     <header className="fixed top-0 z-50 w-full">
       <div className="relative text-white bg-slate-950">
         {/* navgation for desktop */}
-        <nav className="w-[90%] md:w-[80%] mx-auto flex items-center justify-between py-4">
+        <nav className="w-[90%] md:w-[90%] mx-auto flex items-center justify-between py-4">
           {/* Logo */}
           <Link to="/">
             <span className="p-1 text-xl font-bold rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">

@@ -54,7 +54,7 @@ export default function Home() {
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
             <h2 className="text-2xl font-semibold text-center">Recent Posts</h2>
-            <div className="grid gap-5 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 mx-auto md:grid-cols-3">
               {posts.map((post) => (
                 <RelatedPostCard key={post._id} post={post} />
               ))}
