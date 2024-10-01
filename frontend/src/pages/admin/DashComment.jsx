@@ -5,17 +5,25 @@ import moment from "moment";
 import { CiCircleRemove } from "react-icons/ci";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { Table } from "flowbite-react";
+import { Pagination, Table } from "flowbite-react";
 
 const DashComment = () => {
   const [comments, setComments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(Math.ceil(comments.length / 6));
+
+  const onPageChange = (page) => setCurrentPage(page);
+  // console.log(currentPage);
 
   const getComments = async () => {
     try {
-      const response = await axios.get(api.getComments);
-      //   console.log(response.data);
+      const response = await axios.get(
+        `${api.getComments}?page=${currentPage}`
+      );
+      // console.log(response);
       if (response.data.success) {
         setComments(response.data.data);
+        setTotalPages(response.data.totalPages);
       }
     } catch (error) {
       console.error(error.response.data.message);
@@ -24,7 +32,7 @@ const DashComment = () => {
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [currentPage]);
   // console.log(comments);
 
   const handleDeleteComment = async (id) => {
@@ -94,6 +102,14 @@ const DashComment = () => {
           ))}
         </Table.Body>
       </Table>
+      <div className="flex justify-center mt-2">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          showIcons
+        />
+      </div>
     </div>
   );
 };

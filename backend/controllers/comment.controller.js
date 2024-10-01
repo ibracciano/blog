@@ -37,9 +37,21 @@ export const getCommentsByPostId = async (req, res) => {
 }
 
 export const getComments = async (req, res) => {
+    const currentPage = parseInt(req.query.page);
+    console.log(currentPage)
+    const perPage = 6
     try {
-        const comments = await Comment.find().sort({ creatadAt: -1 }).skip(0).limit(9);
-        res.status(200).json({ success: true, data: comments });
+        const totalComments = await Comment.countDocuments()
+        const totalPages = Math.ceil(totalComments / perPage);
+        const comments = await Comment.find().sort({ creatadAt: -1 }).skip((currentPage - 1) * perPage).limit(perPage).exec();
+
+        // pagination
+        if (currentPage > totalPages) {
+            return res.status(404).json({ success: false, message: "Page non trouvée" });
+        }
+
+        res.status(200).json({ success: true, data: comments, currentPage, totalPages });
+        // res.status(200).json({ success: true, data: comments });
     } catch (error) {
         console.error("Erreur dans getComments", error)
         res.status(500).json({ success: false, message: "Erreur dans getComments" })
