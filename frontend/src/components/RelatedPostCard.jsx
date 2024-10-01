@@ -9,7 +9,7 @@ const RelatedPostCard = ({ post }) => {
 
   //   console.log(post);
   return (
-    <div className="group relative w-full border bg-black border-teal-500 hover:border-2 h-[300px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
+    <div className="group relative border bg-black border-teal-500 hover:border-2 h-[300px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
       <div onClick={() => handleNavigate(post)}>
         <img
           src={post.image}
@@ -18,7 +18,7 @@ const RelatedPostCard = ({ post }) => {
         />
       </div>
       <div className="flex items-center justify-between gap-2 p-3">
-        <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
+        <p className="text-xs font-semibold line-clamp-2">{post.title}</p>
         <span className="p-1 text-sm italic bg-teal-400 rounded-md">
           {post.category}
         </span>

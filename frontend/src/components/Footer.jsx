@@ -9,7 +9,11 @@ import {
 } from "react-icons/bs";
 export default function FooterCom() {
   return (
-    <div data-aos="fade-up" data-aos-duration="1000" className="bg-slate-800">
+    <div
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      className="z-50 bg-slate-800"
+    >
       <Footer
         container
         className="border border-t-8 border-t-teal-500 bg-slate-900"

@@ -35,7 +35,11 @@ const PostPage = () => {
 
   return (
     <main className="p-3 pt-20">
-      <h1 className="max-w-2xl mx-auto mt-10 text-3xl font-bold text-center lg:text-4xl">
+      <h1
+        data-aos="fade-left"
+        data-aos-duration="1000"
+        className="max-w-2xl mx-auto mt-10 text-3xl font-bold text-center lg:text-4xl"
+      >
         {item.title}
       </h1>
       <p className="flex items-center justify-center mt-2 mb-5 text-center">
@@ -43,7 +47,11 @@ const PostPage = () => {
           {item.category}
         </button>
       </p>
-      <div className=" max-h-[600px] md:w-[60%] mx-auto">
+      <div
+        data-aos="zoom-out-up"
+        data-aos-duration="1000"
+        className=" max-h-[600px] md:w-[60%] mx-auto"
+      >
         <img
           src={item.image}
           alt=""
