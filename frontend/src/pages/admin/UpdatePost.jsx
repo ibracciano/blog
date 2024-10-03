@@ -89,9 +89,9 @@ const UpdatePost = () => {
               className="w-full md:w-[40%] p-2 rounded-md bg-slate-700"
             >
               <option value="">Select a category</option>
-              <option value="tech">Tech</option>
-              <option value="politics">Politics</option>
-              <option value="sports">Sports</option>
+              <option value="ecommerce">Ecommerce</option>
+              <option value="blog">Blog</option>
+              <option value="portfolio">Portfolio</option>
             </select>
           </div>
           <div className="flex flex-col justify-between w-full gap-2 px-2 py-2 border-2 border-dashed md:flex-row border-cyan-600">

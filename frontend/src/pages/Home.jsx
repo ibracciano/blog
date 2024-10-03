@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import RelatedPostCard from "../components/RelatedPostCard";
 import { useEffect, useState } from "react";
@@ -10,6 +10,8 @@ import "aos/dist/aos.css"; // You can also use <link> for styles
 AOS.init();
 
 export default function Home() {
+  const navigate = useNavigate();
+  const term = "all";
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -21,6 +23,11 @@ export default function Home() {
     };
     getPosts();
   }, []);
+
+  const handleNavigate = () => {
+    navigate(`/search/${term}`);
+    // window.location.href = `/search/${term}`;
+  };
   return (
     <div>
       <div
@@ -34,12 +41,12 @@ export default function Home() {
           Here you'll find a variety of articles and tutorials on topics such as
           web development, software engineering, and programming languages.
         </p>
-        <Link
-          to="/search"
+        <button
+          onClick={handleNavigate}
           className="text-xs font-bold text-teal-500 sm:text-sm hover:underline"
         >
           View all posts
-        </Link>
+        </button>
       </div>
       <div
         data-aos="flip-left"
@@ -59,12 +66,12 @@ export default function Home() {
                 <RelatedPostCard key={post._id} post={post} />
               ))}
             </div>
-            <Link
-              to={"/search"}
+            <button
               className="text-lg text-center text-teal-500 hover:underline"
+              onClick={handleNavigate}
             >
               View all posts
-            </Link>
+            </button>
           </div>
         )}
       </div>

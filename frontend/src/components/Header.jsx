@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 const Header = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [term, setTerm] = useState("");
   // console.log(location);
   const { currentUser } = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +21,6 @@ const Header = () => {
 
   // navigation for mobile
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openSearchTerm, setOpenSearchTerm] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -53,17 +53,27 @@ const Header = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (term) {
+      window.location.href = `/search/${term}`;
+    }
+  };
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="relative text-white bg-slate-950">
         {/* navgation for desktop */}
         <nav className="w-[90%] md:w-[90%] mx-auto flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/">
-            <span className="p-1 text-xl font-bold rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
-              My
+          <Link
+            to="/"
+            className="self-center text-xs font-semibold text-white md:text-lg whitespace-nowrap"
+          >
+            <span className="px-2 py-1 text-white rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              Ouattara's
             </span>
-            <span className="font-bold">BLOG</span>
+            Blog
           </Link>
 
           {/* searchBar */}
@@ -71,7 +81,7 @@ const Header = () => {
           <form className="mx-2 md:w-[40%] bg-slate-800">
             <label
               htmlFor="default-search"
-              className="mb-2 text-sm font-medium text-gray-900 sr-only"
+              className="mb-2 text-[5px] md:text-sm font-medium text-gray-900 sr-only"
             >
               Search
             </label>
@@ -96,13 +106,15 @@ const Header = () => {
               <input
                 type="search"
                 id="default-search"
-                className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="React, Next, others"
+                className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                placeholder="ecommerce, blog, others"
                 required
+                onChange={(e) => setTerm(e.target.value)}
               />
               <button
+                onClick={handleSearch}
                 type="submit"
-                className="absolute inset-y-0 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg end-0 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="absolute inset-y-0 px-1 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg md:px-4 end-0 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Search
               </button>

@@ -31,6 +31,7 @@ import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Search from "./pages/Search";
 // ..
 AOS.init();
 
@@ -66,6 +67,7 @@ const App = () => {
         { path: "verify-email", element: <EmailVerify /> },
         { path: "projects", element: <Projects /> },
         { path: "post/:slug", element: <PostPage /> },
+        { path: "search/:term", element: <Search /> },
         {
           path: "dashboard",
           element: <Dashbord />,
