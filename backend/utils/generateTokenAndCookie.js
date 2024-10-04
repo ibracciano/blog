@@ -11,6 +11,7 @@ export const generateTokenAndCookie = (res, userId) => {
         httpOnly: true,
         sameSite: "Strict",
         secure: true,//process.env.NODE_ENV === "production", //false,
+        domain: "blog-backend-9jwj.onrender.com",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     })
 
