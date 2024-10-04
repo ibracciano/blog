@@ -40,7 +40,7 @@ const SignIn = () => {
         // setTimeout(() => {}, 1000);
         navigate("/");
       }
-      // window.location.reload();
+      window.location.reload();
       // console.log(res);
     } catch (error) {
       toast.error(error.response.data.message);
