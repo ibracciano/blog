@@ -9,7 +9,7 @@ export const generateTokenAndCookie = (res, userId) => {
     // Set JWT token in cookie
     res.cookie('token', token, {
         httpOnly: true,
-        sameSite: "Strict",
+        sameSite: "none",
         secure: true,//process.env.NODE_ENV === "production", //false,
         domain: "blog-backend-9jwj.onrender.com",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
