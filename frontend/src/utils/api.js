@@ -1,4 +1,7 @@
-const backendURL = "http://localhost:3000"
+// en mode local
+// const backendURL = "http://localhost:3000"
+const backendURL = "https://blog-backend-9jwj.onrender.com"
+
 
 export const api = {
     signUp: `${backendURL}/api/user/signup`,
