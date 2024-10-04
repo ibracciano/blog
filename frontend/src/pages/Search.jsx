@@ -12,6 +12,10 @@ const Search = () => {
   const [posts, setPosts] = useState([]);
   const [filtering, setFiltering] = useState(term === "all" ? "" : term);
 
+  const handleFilterChange = (e) => {
+    setFiltering(e.target.value);
+    setSearchTerm(e.target.value);
+  };
   console.log(filtering);
 
   useEffect(() => {
@@ -32,14 +36,14 @@ const Search = () => {
       }
     };
     getPosts();
-  }, [searchTerm, filtering]);
+  }, [searchTerm]);
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <div className="md:w-[20%] md:shadow-md shadow-blue-500 md:h-screen flex flex-col justify-center md:border-r border-blue-500 pt-16">
-        <div className="grid grid-cols-2 gap-2 p-5 bg-black md:grid-cols-1">
+    <div className="flex flex-col">
+      <div className="flex flex-col justify-center pt-16 border-blue-500 md:shadow-md shadow-blue-500 md:border-r">
+        <div className="grid items-center grid-cols-1 gap-2 px-5 py-5 bg-black md:px-16 md:grid-cols-2">
           {/* searchItem */}
-          <form className="my-5">
+          <form>
             <label htmlFor="searchItem">Term</label>
             <input
               className="w-full px-4 bg-black border-2 rounded-md"
@@ -52,14 +56,12 @@ const Search = () => {
           </form>
 
           {/* filterBy */}
-          <form className="mb-5">
+          <form>
             <label htmlFor="filterBy">Filter By Category</label>
             <select
               className="w-full px-4 bg-black border-2 rounded-md"
               name="filterBy"
-              onChange={(e) =>
-                setFiltering(e.target.value) & searchTerm(e.target.value)
-              }
+              onChange={handleFilterChange}
               value={filtering}
             >
               <option value="">Select</option>
@@ -68,23 +70,10 @@ const Search = () => {
               <option value="portfolio">Portfolio</option>
             </select>
           </form>
-
-          {/* sortBy */}
-          <div>
-            <label htmlFor="sortBy">Sort By</label>
-            <select
-              className="w-full px-4 bg-black border-2 rounded-md"
-              name="sortBy"
-            >
-              <option value="">Select</option>
-              <option value="recent">Desc</option>
-              <option value="oldest">Asc</option>
-            </select>
-          </div>
         </div>
       </div>
       {/*... */}
-      <div className="md:w-[80%] grid md:grid-cols-2 gap-5 px-5 py-5 md:pt-20">
+      <div className="grid gap-5 px-16 py-5 md:grid-cols-2">
         {posts.map((post) => (
           <SearchPost key={post._id} post={post} />
         ))}
