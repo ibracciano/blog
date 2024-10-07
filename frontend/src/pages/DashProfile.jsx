@@ -15,6 +15,7 @@ const DashProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     username: currentUser.username,
@@ -28,12 +29,16 @@ const DashProfile = () => {
   };
 
   // upload de photo
-  const handleUploadProduct = async (e) => {
+  const handleUploadPhoto = async (e) => {
+    setLoading(true);
     const file = e.target.files[0];
     // console.log(file);
     const uploadImageCloudinary = await uploadImage(file);
     // console.log(uploadImageCloudinary);
     setUserInfo({ ...userInfo, photo: uploadImageCloudinary.secure_url });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   // envoyer les informations de modifications
@@ -111,17 +116,21 @@ const DashProfile = () => {
           data-aos="zoom-out-down"
         >
           <img
-            src={userInfo.photo ? userInfo.photo : Loading}
+            src={!loading ? userInfo.photo : Loading}
             alt="profile-photo"
             className="w-full h-full rounded-full md:mb-10"
           />
         </div>
 
+        <p className="text-red-500">
+          NB: <b>.jpg</b> or <b>.png</b> is accept
+        </p>
+
         <input
           type="file"
           name="photo"
           id="photo"
-          onChange={handleUploadProduct}
+          onChange={handleUploadPhoto}
           accept="image/png, image/jpeg"
           className="w-[90%] md:w-[50%] h-full px-2 py-1 mx-5 rounded-md bg-slate-700"
           // value={userInfo.photo}

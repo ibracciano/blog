@@ -245,6 +245,7 @@ export const checkAuth = async (req, res) => {
 }
 
 export const google = async (req, res) => {
+    // console.log(req.body)
     const { username, email, photoURL } = req.body
     try {
         const userExist = await User.findOne({ email })

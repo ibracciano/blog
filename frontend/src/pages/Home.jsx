@@ -43,7 +43,7 @@ export default function Home() {
         </p>
         <button
           onClick={handleNavigate}
-          className="text-xs font-bold text-teal-500 sm:text-sm hover:underline"
+          className="text-xs font-bold text-teal-500 text-start sm:text-sm hover:underline"
         >
           View all posts
         </button>

@@ -3,12 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider } from "../firebase/firebase";
 import { toast } from "react-toastify";
 import axios from "axios";
-// import { useDispatch } from "react-redux";
-// import { loginUser } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Google = () => {
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const signIn = async () => {
     await signInWithPopup(auth, googleProvider)
@@ -26,12 +26,12 @@ const Google = () => {
         // console.log(newUser);
 
         await axios
-          .post("http://localhost:3000/api/auth/google", newUser)
+          .post("http://localhost:3000/api/user/google", newUser)
           .then((response) => {
-            // console.log(response);
+            // console.log(response.data);
             if (response.data.success) {
               toast.success(response.data.message);
-              //   dispatch(loginUser(response.data));
+              dispatch(loginUser(response.data.data));
               setTimeout(() => {
                 navigate("/");
               }, 1000);

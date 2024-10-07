@@ -9,6 +9,7 @@ import { logoutUser } from "../redux/userSlice";
 import axios from "axios";
 import { api } from "../utils/api";
 import { toast } from "react-toastify";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const location = useLocation();
@@ -68,7 +69,7 @@ const Header = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="self-center text-xs font-semibold text-white md:text-lg whitespace-nowrap"
+            className="self-center text-lg font-semibold text-white md:text-lg whitespace-nowrap"
           >
             <span className="px-2 py-1 text-white rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
               Ouattara's
@@ -78,7 +79,7 @@ const Header = () => {
 
           {/* searchBar */}
 
-          <form className="mx-2 md:w-[40%] bg-slate-800">
+          <form className="hidden md:block mx-2 md:w-[40%] bg-slate-800">
             <label
               htmlFor="default-search"
               className="mb-2 text-[5px] md:text-sm font-medium text-gray-900 sr-only"
@@ -140,7 +141,6 @@ const Header = () => {
           </ul>
 
           {/* connexion */}
-
           {currentUser ? (
             <div className="flex items-center gap-2">
               {/* image profile */}
@@ -148,16 +148,20 @@ const Header = () => {
                 className="w-10 h-10 border-4 border-blue-500 rounded-full cursor-pointer"
                 onClick={() => setOpenModal(!openModal)}
               >
-                <img
-                  src={currentUser.photo}
-                  alt="profile"
-                  className="w-full rounded-full"
-                />
+                {currentUser.photo ? (
+                  <img
+                    src={currentUser.photo}
+                    alt="profile"
+                    className="w-full h-full bg-cover rounded-full"
+                  />
+                ) : (
+                  <FaUserCircle />
+                )}
               </div>
               {/* name profile */}
-              {/* <p>{currentUser.username.slice(0, 4)}</p> */}
+              <p className="text-xs">{currentUser.username.split(" ")[0]}</p>
               {openModal && (
-                <div className="flex flex-col bg-slate-800 fixed top-[72px] right-16 md:right-24 rounded-md">
+                <div className="flex flex-col bg-slate-800 fixed top-[72px] right-16 md:right-24 rounded-md z-50">
                   <p className="flex flex-col px-2 py-1 text-sm rounded-md bg-gradient-to-r from-cyan-500 to-blue-500">
                     <span>{`@ ${currentUser.username}`}</span>
                     <span>{currentUser.email}</span>
@@ -190,7 +194,7 @@ const Header = () => {
           ) : (
             <Link
               to="/sign-in"
-              className="text-[10px] md:text-base px-2 py-1 transition-all duration-100 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 hover:outline"
+              className="px-2 py-1 transition-all duration-100 rounded-md md:text-base bg-gradient-to-r from-cyan-500 to-blue-500 hover:outline"
             >
               Sign In
             </Link>
@@ -205,22 +209,66 @@ const Header = () => {
         {/* mobile menu */}
         {/* dropdown menu for mobile */}
         {isMenuOpen && (
-          <ul className="w-full px-[5%] py-3 flex flex-col gap-1 md:hidden absolute top-[70px] bg-slate-950">
-            {links.map((link, index) => (
-              <li key={index} className="w-full">
-                <NavLink
-                  to={link.path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "px-2 w-full inline-flex bg-slate-900 border-2 border-slate-800 py-1 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black"
-                      : "px-2 inline-flex w-full border-2 border-slate-800 py-1 rounded-md bg-slate-900"
-                  }
+          <div>
+            <form className="md:hidden mx-4 border-2 rounded-md border-teal-500 md:w-[40%] bg-slate-800">
+              <label
+                htmlFor="default-search"
+                className="mb-2 text-[5px] md:text-sm font-medium text-gray-900 sr-only"
+              >
+                Search
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                  placeholder="ecommerce, blog, others"
+                  required
+                  onChange={(e) => setTerm(e.target.value)}
+                />
+                <button
+                  onClick={handleSearch}
+                  type="submit"
+                  className="absolute inset-y-0 px-1 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg md:px-4 end-0 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  {link.name}{" "}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+                  Search
+                </button>
+              </div>
+            </form>
+            <ul className="w-full px-[5%] py-3 flex flex-col gap-1 md:hidden  bg-slate-950 z-50">
+              {links.map((link, index) => (
+                <li key={index} className="w-full">
+                  <NavLink
+                    to={link.path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "px-2 w-full inline-flex bg-slate-900 border-2 border-slate-800 py-1 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-black"
+                        : "px-2 inline-flex w-full border-2 border-slate-800 py-1 rounded-md bg-slate-900"
+                    }
+                  >
+                    {link.name}{" "}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </header>

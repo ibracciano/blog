@@ -9,7 +9,7 @@ const SearchPost = ({ post }) => {
 
   //   console.log(post);
   return (
-    <div className="group flex flex-col relative border bg-black border-teal-500 hover:border-2  h-[300px] overflow-y-hidden rounded-lg  transition-all">
+    <div className="group flex flex-col relative border bg-black border-teal-500 hover:border-2 h-[300px] overflow-y-hidden rounded-lg  transition-all">
       <div onClick={() => handleNavigate(post)}>
         <img
           src={post.image}

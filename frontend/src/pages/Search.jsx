@@ -73,7 +73,7 @@ const Search = () => {
         </div>
       </div>
       {/*... */}
-      <div className="grid gap-5 px-16 py-5 md:grid-cols-2">
+      <div className="grid gap-5 px-4 py-5 md:px-16 md:grid-cols-2">
         {posts.map((post) => (
           <SearchPost key={post._id} post={post} />
         ))}
