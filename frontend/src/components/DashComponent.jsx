@@ -52,7 +52,7 @@ export default function DashboardComp() {
     const getAllComments = async () => {
       try {
         const response = await axios.get(api.getComments);
-        console.log(response);
+        // console.log(response);
         if (response.data.success) {
           setComments(response.data.data);
           setTotalComments(response.data.totalComments);
